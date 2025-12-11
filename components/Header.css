@@ -1,0 +1,46 @@
+/* components/Header.css */
+.header {
+    color: white;
+    padding: 10px;
+    text-align: center;
+    font-size: 2em;
+}
+
+.page-title {
+    margin: 0;
+    color: #2a75bb;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.search-bar input {
+    padding: 8px 12px;
+    width: 100%;
+    max-width: 490px;
+    font-size: 0.5em;
+    border: 1px solid #ccc;
+    border-radius: 5px 0 0 5px;
+    outline: none;
+}
+
+.search-bar button {
+    padding: 8px 12px;
+    font-size: 0.5em;
+    border: 1px solid #ccc;
+    border-left: none;
+    background-color: #007BFF;
+    color: white;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.search-bar button:hover {
+    background-color: #0056b3;
+}

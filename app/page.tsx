@@ -1,87 +1,110 @@
-import Link from 'next/link'
-import { ArrowRight, Search, Users, Star } from 'lucide-react'
+'use client'
+
+import { useState, useEffect } from 'react'
+import Header from '@/components/Header'
+import PokemonCard from '@/components/PokemonCard'
+import './globals.css'
 
 export default function HomePage() {
+  const [pokemons, setPokemons] = useState<any[]>([])
+  const [loading, setLoading] = useState(true)
+  const [offset, setOffset] = useState(0)
+  const [searchTerm, setSearchTerm] = useState('')
+
+  const fetchPokemons = async (loadMore = false) => {
+    try {
+      setLoading(true)
+      const newOffset = loadMore ? offset : 0
+      const limit = 20
+      
+      let url = `https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${newOffset}`
+      
+      if (searchTerm) {
+        const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${searchTerm.toLowerCase()}`)
+        if (response.ok) {
+          const singlePokemon = await response.json()
+          setPokemons([{
+            id: singlePokemon.id,
+            name: singlePokemon.name,
+            image: singlePokemon.sprites.front_default,
+            types: singlePokemon.types.map((t: any) => t.type.name)
+          }])
+          setLoading(false)
+          return
+        }
+      }
+      
+      const response = await fetch(url)
+      const data = await response.json()
+      
+      const pokemonDetails = await Promise.all(
+        data.results.map(async (pokemon: any) => {
+          const details = await fetch(pokemon.url).then(res => res.json())
+          return {
+            id: details.id,
+            name: details.name,
+            image: details.sprites.front_default,
+            types: details.types.map((t: any) => t.type.name)
+          }
+        })
+      )
+      
+      if (loadMore) {
+        setPokemons([...pokemons, ...pokemonDetails])
+        setOffset(newOffset + limit)
+      } else {
+        setPokemons(pokemonDetails)
+        setOffset(limit)
+      }
+    } catch (error) {
+      console.error('Erro ao buscar pokémons:', error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    fetchPokemons()
+  }, [])
+
+  const handleSearch = (term: string) => {
+    setSearchTerm(term)
+    fetchPokemons()
+  }
+
+  const loadMorePokemons = () => {
+    fetchPokemons(true)
+  }
+
   return (
-    <div className="min-h-screen bg-gradient-to-b from-red-50 to-white">
-      {/* Hero Section */}
-      <section className="text-center py-20 px-4">
-        <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
-          Bem-vindo à <span className="text-red-600">Pokedex</span>
-        </h1>
-        <p className="text-lg md:text-xl text-gray-600 mb-10 max-w-2xl mx-auto">
-          Explore o mundo dos Pokémon, cadastre-se e salve seus favoritos!
-        </p>
-        
-        <div className="flex flex-col md:flex-row gap-4 justify-center">
-          <Link
-            href="/pokemons"
-            className="inline-flex items-center justify-center px-6 py-3 text-lg font-medium text-white bg-red-600 rounded-lg hover:bg-red-700 transition-colors"
-          >
-            Explorar Pokémons <ArrowRight className="ml-2" />
-          </Link>
-          <Link
-            href="/login"
-            className="inline-flex items-center justify-center px-6 py-3 text-lg font-medium text-red-600 bg-white border-2 border-red-600 rounded-lg hover:bg-red-50 transition-colors"
-          >
-            <Users className="mr-2" /> Entrar / Cadastrar
-          </Link>
+    <div>
+      <Header onSearch={handleSearch} />
+      
+      <div className="container">
+        {/* Grid de Pokémons */}
+        <div className="pokeContainer">
+          {loading && pokemons.length === 0 ? (
+            <div className="text-center">Carregando pokémons...</div>
+          ) : pokemons.length === 0 ? (
+            <div className="text-center">Nenhum pokémon encontrado.</div>
+          ) : (
+            pokemons.map((pokemon) => (
+              <PokemonCard key={pokemon.id} pokemon={pokemon} />
+            ))
+          )}
         </div>
-      </section>
 
-      {/* Features */}
-      <section className="py-16 px-4">
-        <div className="container mx-auto">
-          <h2 className="text-3xl font-bold text-center mb-12">Funcionalidades</h2>
-          
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="text-center p-6 bg-white rounded-xl shadow-md">
-              <div className="bg-red-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Search className="text-red-600" size={32} />
-              </div>
-              <h3 className="text-xl font-bold mb-2">Busca de Pokémons</h3>
-              <p className="text-gray-600">
-                Encontre qualquer Pokémon com nossa lista completa
-              </p>
-            </div>
-            
-            <div className="text-center p-6 bg-white rounded-xl shadow-md">
-              <div className="bg-red-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Users className="text-red-600" size={32} />
-              </div>
-              <h3 className="text-xl font-bold mb-2">Sistema de Usuários</h3>
-              <p className="text-gray-600">
-                Cadastre-se e faça login para salvar seus pokémons favoritos
-              </p>
-            </div>
-            
-            <div className="text-center p-6 bg-white rounded-xl shadow-md">
-              <div className="bg-red-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Star className="text-red-600" size={32} />
-              </div>
-              <h3 className="text-xl font-bold mb-2">Favoritos</h3>
-              <p className="text-gray-600">
-                Salve seus pokémons favoritos e acesse de qualquer lugar
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Preview */}
-      <section className="py-16 px-4 bg-gray-50">
-        <div className="container mx-auto text-center">
-          <h2 className="text-3xl font-bold mb-8">Como funciona?</h2>
-          <div className="max-w-3xl mx-auto">
-            <ol className="list-decimal list-inside text-left space-y-4 text-lg">
-              <li className="mb-2">👉 <strong>Cadastre-se</strong> na plataforma</li>
-              <li className="mb-2">👉 <strong>Explore</strong> a lista de pokémons</li>
-              <li className="mb-2">👉 <strong>Clique no coração</strong> para favoritar</li>
-              <li className="mb-2">👉 <strong>Acesse "Favoritos"</strong> para ver sua coleção</li>
-            </ol>
-          </div>
-        </div>
-      </section>
+        {/* Botão Carregar Mais (só mostra se não estiver pesquisando) */}
+        {!searchTerm && pokemons.length > 0 && (
+          <button 
+            className="load-more-btn"
+            onClick={loadMorePokemons}
+            disabled={loading}
+          >
+            {loading ? 'Carregando...' : 'Carregar mais Pokémon'}
+          </button>
+        )}
+      </div>
     </div>
   )
 }
