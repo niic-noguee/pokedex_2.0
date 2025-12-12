@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import Link from 'next/link'
 import { supabase } from '@/lib/supabase'
 import './PokemonCard.css'
 
@@ -38,6 +39,7 @@ export default function PokemonCard({ pokemon }: PokemonCardProps) {
   }
 
   const toggleFavorite = async (e: React.MouseEvent) => {
+    e.preventDefault() 
     e.stopPropagation()
     
     if (!user) {
@@ -69,7 +71,7 @@ export default function PokemonCard({ pokemon }: PokemonCardProps) {
   }
 
   return (
-    <div className="pokeCard">
+    <Link href={`/pokemon/${pokemon.id}`} className="pokeCard">
       <img 
         src={pokemon.image} 
         alt={pokemon.name}
@@ -89,6 +91,6 @@ export default function PokemonCard({ pokemon }: PokemonCardProps) {
       >
         {isFavorite ? '❤️' : '🤍'}
       </button>
-    </div>
+    </Link>
   )
 }
