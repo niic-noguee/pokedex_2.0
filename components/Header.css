@@ -1,15 +1,61 @@
-/* components/Header.css */
 .header {
     color: white;
-    padding: 10px;
+    padding: 15px 20px;
     text-align: center;
     font-size: 2em;
+    /*background: linear-gradient(to right, #2a75bb, #3d7dca);*/
+}
+
+.header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
 }
 
 .page-title {
     margin: 0;
-    color: #2a75bb;
+    color: white;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    font-size: 1.8em;
+}
+
+.header-actions {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.favorites-link {
+    padding: 8px 16px;
+    background: #ff6b6b;
+    color: white;
+    text-decoration: none;
+    border-radius: 20px;
+    font-size: 0.5em;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
+.favorites-link:hover {
+    background: #ff4757;
+}
+
+.logout-btn {
+    padding: 8px 16px;
+    background: #666;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    font-size: 0.5em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.logout-btn:hover {
+    background: #555;
 }
 
 .search-bar {
@@ -20,18 +66,18 @@
 }
 
 .search-bar input {
-    padding: 8px 12px;
+    padding: 10px 15px;
     width: 100%;
-    max-width: 490px;
-    font-size: 0.5em;
+    max-width: 500px;
+    font-size: 0.6em;
     border: 1px solid #ccc;
     border-radius: 5px 0 0 5px;
     outline: none;
 }
 
 .search-bar button {
-    padding: 8px 12px;
-    font-size: 0.5em;
+    padding: 10px 15px;
+    font-size: 0.6em;
     border: 1px solid #ccc;
     border-left: none;
     background-color: #007BFF;
@@ -43,4 +89,63 @@
 
 .search-bar button:hover {
     background-color: #0056b3;
+}
+
+@media (max-width: 768px) {
+    .header-top {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .header-actions {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .search-bar input {
+        max-width: 100%;
+    }
+}
+
+/* ---------- */
+
+.logo-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.user-greeting {
+  color: white;
+  font-size: 0.6em;
+  padding: 8px 15px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+}
+
+.login-link,
+.register-link {
+  padding: 8px 16px;
+  text-decoration: none;
+  border-radius: 20px;
+  font-size: 0.6em;
+  font-weight: bold;
+  transition: all 0.3s;
+}
+
+.login-link {
+  background: #4CAF50;
+  color: white;
+}
+
+.login-link:hover {
+  background: #45a049;
+}
+
+.register-link {
+  background: #FF9800;
+  color: white;
+}
+
+.register-link:hover {
+  background: #f57c00;
 }

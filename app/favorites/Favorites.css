@@ -1,0 +1,247 @@
+.favorites-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    min-height: 70vh;
+}
+
+.favorites-header {
+    text-align: center;
+    margin-bottom: 40px;
+    position: relative;
+}
+
+.back-button {
+    position: absolute;
+    left: 0;
+    top: 10px;
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.back-button:hover {
+    background-color: #0056b3;
+}
+
+.page-title {
+    color: #2a75bb;
+    font-size: 2.5em;
+    margin: 20px 0;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.user-info {
+    background: linear-gradient(to right, #ff6b6b, #ff8e53);
+    color: white;
+    padding: 15px 25px;
+    border-radius: 10px;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    margin-top: 10px;
+}
+
+.favorites-count {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+/* Grid de favoritos */
+.favorites-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 25px;
+    margin: 30px 0;
+}
+
+.favorite-item {
+    position: relative;
+    transition: transform 0.3s;
+}
+
+.favorite-item:hover {
+    transform: translateY(-5px);
+}
+
+.remove-btn {
+    width: 100%;
+    margin-top: 10px;
+    padding: 8px;
+    background-color: #ff4757;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.remove-btn:hover {
+    background-color: #ff3742;
+}
+
+/* Estado vazio */
+.empty-favorites {
+    text-align: center;
+    padding: 60px 20px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    margin: 40px 0;
+}
+
+.empty-icon {
+    font-size: 4em;
+    margin-bottom: 20px;
+    opacity: 0.5;
+}
+
+.empty-favorites h2 {
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.empty-favorites p {
+    color: #888;
+    margin-bottom: 30px;
+    font-size: 1.1em;
+}
+
+.explore-btn {
+    padding: 12px 30px;
+    background: linear-gradient(to right, #007BFF, #00BFFF);
+    color: white;
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: bold;
+    font-size: 1.1em;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.explore-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0, 123, 255, 0.3);
+}
+
+/* Estatísticas */
+.favorites-stats {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 50px;
+}
+
+.stat-card {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    text-align: center;
+    min-width: 150px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.stat-number {
+    display: block;
+    font-size: 2.5em;
+    font-weight: bold;
+    color: #2a75bb;
+    margin-bottom: 10px;
+}
+
+.stat-label {
+    color: #666;
+    font-size: 0.9em;
+}
+
+/* Quando não está logado */
+.not-logged-in {
+    text-align: center;
+    padding: 60px 20px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    margin: 40px 0;
+}
+
+.not-logged-in h2 {
+    color: #ff4757;
+    margin-bottom: 20px;
+}
+
+.not-logged-in p {
+    color: #666;
+    margin-bottom: 30px;
+    font-size: 1.1em;
+}
+
+.auth-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+.auth-btn {
+    padding: 12px 30px;
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: bold;
+    transition: all 0.3s;
+}
+
+.login-btn {
+    background: linear-gradient(to right, #007BFF, #00BFFF);
+    color: white;
+}
+
+.back-btn {
+    background: #f8f9fa;
+    color: #333;
+    border: 2px solid #ddd;
+}
+
+.auth-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Loading */
+.loading {
+    text-align: center;
+    padding: 60px;
+    font-size: 1.2em;
+    color: #666;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+    .favorites-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 15px;
+    }
+    
+    .favorites-stats {
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+    
+    .auth-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .back-button {
+        position: relative;
+        margin-bottom: 20px;
+        display: inline-block;
+    }
+}
